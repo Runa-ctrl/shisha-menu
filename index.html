@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shisha Point Bar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #ffffff;
+      color: #1e1a14;
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .hero img.hero-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.55));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 24px;
+    }
+
+    .hero-overlay img.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  mix-blend-mode: multiply;
+}
+
+    .hero-overlay h1 {
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 400;
+    }
+
+    .hero-overlay p {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 3px;
+      margin-top: 4px;
+    }
+
+    .category-slider-wrap {
+      background: #fff;
+      border-bottom: 2px solid #f5edd8;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+
+    .category-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 16px;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+
+    .category-slider::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      flex-shrink: 0;
+      background: #fdf6e8;
+      border: 1.5px solid #e8d5a0;
+      border-radius: 25px;
+      padding: 7px 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #7a6030;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: #c8860a;
+      color: #fff;
+      border-color: #c8860a;
+    }
+
+    main {
+      padding: 24px 16px 60px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .menu-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .menu-section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #c8860a;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid #f0e0b0;
+    }
+
+    .sub-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #7a6030;
+      margin: 24px 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #e8d5a0;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f5edd8;
+      gap: 12px;
+    }
+
+    .item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1e1a14;
+      margin-bottom: 2px;
+    }
+
+    .item-volume {
+      font-size: 0.75rem;
+      color: #a08860;
+      font-style: italic;
+    }
+
+    .item-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #c8860a;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <img class="hero-bg" src="bar-photo.jpg" alt="Shisha Point Bar"
+       onerror="this.parentElement.style.background='linear-gradient(135deg, #c8860a, #5c3a1e)'" />
+  <div class="hero-overlay">
+    <img class="logo" src="logo.svg" alt="Logo" onerror="this.style.display='none'" />
+    <h1>Shisha Point</h1>
+    <p>B A R</p>
+  </div>
+</div>
+
+<div class="category-slider-wrap">
+  <div class="category-slider">
+    <button class="cat-btn active" onclick="showSection('nargile', this)">Наргиле</button>
+    <button class="cat-btn" onclick="showSection('chai', this)">Чай</button>
+    <button class="cat-btn" onclick="showSection('kafe', this)">Кафе</button>
+    <button class="cat-btn" onclick="showSection('limonadi', this)">Лимонади</button>
+    <button class="cat-btn" onclick="showSection('bezalkoholni', this)">Безалкохолни</button>
+    <button class="cat-btn" onclick="showSection('kokteili', this)">Коктейли</button>
+    <button class="cat-btn" onclick="showSection('bira', this)">Бира</button>
+    <button class="cat-btn" onclick="showSection('vino', this)">Вино</button>
+    <button class="cat-btn" onclick="showSection('shotove', this)">Шотове</button>
+    <button class="cat-btn" onclick="showSection('alkohol', this)">Алкохол</button>
+    <button class="cat-btn" onclick="showSection('hapvane', this)">Хапване</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- НАРГИЛЕ -->
+  <div class="menu-section active" id="nargile">
+    <h2 class="section-title">Наргиле</h2>
+
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">TANGIRE</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">19.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">HONEY BADGER</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">MUST HAVE</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ELEMENT</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">O'S</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">HOLSTER</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">DARK SIDE</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">BRUSKO</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">BLACK BURN</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">DOZAJ BLACK</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=200&q=80" alt="Наргиле" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">SPECTRUM</div><div class="item-volume">Наргиле</div></div>
+      <div class="item-price">18.40 €</div>
+    </div>
+  </div>
+
+  <!-- ЧАЙ -->
+  <div class="menu-section" id="chai">
+    <h2 class="section-title">Чай</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧАЙ ПО ИЗБОР</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЯБЪЛКА И КРУША</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПОРТОКАЛ И КАКТУС</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРВЕНА БОРОВИНКА</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СПОКОЙСТВИЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧАЙ МЕНТА</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТУРСКИ ЧАЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТУРСКИ ЧАЙ</div><div class="item-volume">130мл</div></div>
+      <div class="item-price">1.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧАЙНИК С ЧАЙ</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">4.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЪЛГОЛЕТИЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ХИБИСКУС</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАЩЕРКА</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МУРСАЛСКИ ЧАЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СЪБУДИ СЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРЕН ЧАЙ С ВАНИЛИЯ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРЕША</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧАЙ ХМЕЛ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.61 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РОДОПСКИ АРОМАТ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЦВЕТНО УХАНИЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЛАНИНСКИ ЧАЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЪРЛ ГРЕЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЗЕЛЕН ЧАЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ГОРСКИ ПЛОДОВЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ВДЪХНОВЕНИЕ НА БУДА</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80" alt="Чай" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАНГО И ПАПАЯ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+  </div>
+
+  <!-- КАФЕ -->
+  <div class="menu-section" id="kafe">
+    <h2 class="section-title">Кафе</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЕСПРЕСО</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">1.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КАПУЧИНО</div><div class="item-volume">150мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТУРСКО КАФЕ</div><div class="item-volume">100мл</div></div>
+      <div class="item-price">2.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛАТЕ</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МЛЯКО С НЕС</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МЛЯКО С МЕД И КАНЕЛА</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МЛЯКО С КАКАО</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">1.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТОПЪЛ ШОКОЛАД</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">3.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ФРАПЕ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ФРАПЕ БЯЛО</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЕЗКОФЕЙНОВО КАФЕ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">1.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЕЙЛИС ШОКОЛАД</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">3.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80" alt="Кафе" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КАНИЧКА МЛЯКО</div><div class="item-volume">30мл</div></div>
+      <div class="item-price">0.50 €</div>
+    </div>
+  </div>
+
+  <!-- ЛИМОНАДИ -->
+  <div class="menu-section" id="limonadi">
+    <h2 class="section-title">Домашна Лимонада</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЪЗ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАЛИНА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЯГОДА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАНГО</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СМОКИНЯ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">АНАНАС</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МУРСАЛСКИ ЧАЙ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ВИШНА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛИМОН И ДЖИНДЖИФИЛ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЪПЕШ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПРАСКОВА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ВИОЛЕТКИ</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЦИТРОНАДА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">3.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80" alt="Лимонада" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">1Л ЛИМОНАДА ПО ИЗБОР</div><div class="item-volume">1л</div></div>
+      <div class="item-price">6.70 €</div>
+    </div>
+  </div>
+
+  <!-- БЕЗАЛКОХОЛНИ -->
+  <div class="menu-section" id="bezalkoholni">
+    <h2 class="section-title">Безалкохолни</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ВОДА</div><div class="item-volume">350мл</div></div>
+      <div class="item-price">1.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ВОДА</div><div class="item-volume">750мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СОДА</div><div class="item-volume">350мл</div></div>
+      <div class="item-price">1.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СОДА</div><div class="item-volume">750мл</div></div>
+      <div class="item-price">2.90 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PERRIER</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">3.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЕПСИ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЕПСИ ТУИСТ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КЛАУСТАЛЕР</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">7 UP</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РЕД БУЛ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">3.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PRISUN ЯБЪЛКА</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PRISUN ПОРТОКАЛ</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PRISUN ПРАСКОВА</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PRISUN ЯГОДА И БАНАН</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">PRISUN ВИШНА</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">2.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РИЛАНА МИН. ВОДА</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">1.75 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛИПТЪН ЛИМОН</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛИПТЪН ПРАСКОВА</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ФРЕШ</div><div class="item-volume">300мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЕПСИ МАХ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТОНИК</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=200&q=80" alt="Безалкохолни" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">VIDAS СТУДЕН ЧАЙ БЕЗ ЗАХАР</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+  </div>
+
+  <!-- КОКТЕЙЛИ -->
+  <div class="menu-section" id="kokteili">
+    <h2 class="section-title">Коктейли</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">САУЪР</div><div class="item-volume">120мл</div></div>
+      <div class="item-price">5.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТОМ КОЛИНС</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЛЪДИ МЕРИ</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КУБА ЛИБРЕ</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПОРНСТАР</div><div class="item-volume">120мл</div></div>
+      <div class="item-price">6.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАРГАРИТА</div><div class="item-volume">120мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛОНГ АЙЛЪНД</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">7.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">24/7</div><div class="item-volume">160мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КОКТЕЙЛ НА БАРМАНА</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">8.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">НЕГРОНИ</div><div class="item-volume">140мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛЕТНА ВИОЛЕТКА</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КОСМОПОЛИТЪН</div><div class="item-volume">160мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЯЛ РУСНАК</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БРАМБЪЛ</div><div class="item-volume">290мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Коктейл" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДАЙКИРИ</div><div class="item-volume">120мл</div></div>
+      <div class="item-price">6.10 €</div>
+    </div>
+  </div>
+
+  <!-- БИРА -->
+  <div class="menu-section" id="bira">
+    <h2 class="section-title">Бира и Сайдери</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУРГАСКО</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">2.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СТЕЛА АРТОА</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">2.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СРЕБЪРЕН БЕРНАРД</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЗЛАТЕН БЕРНАРД</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КОРОНА</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СТОЛИЧНО ВАЙС</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">2.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ШОФЕРХОФЕР</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ХАЙНИКЕН БЕЗАЛКОХОЛЕН</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СЪМЪРСБИ</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">2.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПИРИНСКО</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">2.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ХАЙНИКЕН НАЛИВНА</div><div class="item-volume">400мл</div></div>
+      <div class="item-price">2.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТЪМЕН БЕРНАРД</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КОЗЕЛ 11'</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТЪМЕН КОЗЕЛ</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КЛАУСТАЛЕР БЕЗАЛКОХОЛЕН</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80" alt="Бира" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СТОЛИЧНО БОК</div><div class="item-volume">330мл</div></div>
+      <div class="item-price">2.80 €</div>
+    </div>
+  </div>
+
+  <!-- ВИНО -->
+  <div class="menu-section" id="vino">
+    <h2 class="section-title">Вино</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЯЛО DOMAINE DE L'ARJOLLE</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЯЛО DOMAINE DE L'ARJOLLE</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">10.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЯЛО DOMAINE DE L'ARJOLLE</div><div class="item-volume">1л</div></div>
+      <div class="item-price">19.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРВЕНО DOMAINE DE L'ARJOLLE</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРВЕНО DOMAINE DE L'ARJOLLE</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">10.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧЕРВЕНО DOMAINE DE L'ARJOLLE</div><div class="item-volume">1л</div></div>
+      <div class="item-price">19.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РОЗЕ DOMAINE DE L'ARJOLLE</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РОЗЕ DOMAINE DE L'ARJOLLE</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">10.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РОЗЕ DOMAINE DE L'ARJOLLE</div><div class="item-volume">1л</div></div>
+      <div class="item-price">19.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУТИЛКА БЯЛО ВИНО</div><div class="item-volume">750мл</div></div>
+      <div class="item-price">18.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУТИЛКА ЧЕРВЕНО ВИНО</div><div class="item-volume">750мл</div></div>
+      <div class="item-price">18.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУТИЛКА РОЗЕ</div><div class="item-volume">750мл</div></div>
+      <div class="item-price">15.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ГРЕЯНО ВИНО</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">4.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАЛИНОВО ВИНО</div><div class="item-volume">150мл</div></div>
+      <div class="item-price">4.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАЛИНОВО ВИНО</div><div class="item-volume">500мл</div></div>
+      <div class="item-price">12.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАЛИНОВО ВИНО</div><div class="item-volume">1л</div></div>
+      <div class="item-price">22.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80" alt="Вино" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЧАША ПРОСЕКО</div><div class="item-volume">180мл</div></div>
+      <div class="item-price">4.80 €</div>
+    </div>
+  </div>
+
+  <!-- ШОТОВЕ -->
+  <div class="menu-section" id="shotove">
+    <h2 class="section-title">Шотове</h2>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЙЕГЕРМАЙСТЕР</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТЕКИЛА ОЛМЕКА ЗЛАТНА</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ТЕКИЛА ОЛМЕКА СРЕБЪРНА</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">АБСЕНТ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СКИНОС</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДРАКОНОВА ГЛЪТКА</div><div class="item-volume">10 шота</div></div>
+      <div class="item-price">8.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ШОТОВЕ НА БАРМАНА</div><div class="item-volume">10 шота</div></div>
+      <div class="item-price">10.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=200&q=80" alt="Шот" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">АФТЪРШОК</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.30 €</div>
+    </div>
+  </div>
+
+  <!-- АЛКОХОЛ -->
+  <div class="menu-section" id="alkohol">
+    <h2 class="section-title">Алкохол</h2>
+
+    <div class="sub-title">Водка</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Водка" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РУСКИ СТАНДАРТ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Водка" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">РЕЙКА</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">4.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Водка" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">СТОЛИЧНАЯ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Водка" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЕЛУГА</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">6.90 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Водка" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">GREY GOOSE</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">6.90 €</div>
+    </div>
+
+    <div class="sub-title">Уиски</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖАК ДАНИЕЛС</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">4.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖИМ БИЙМ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.20 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУШМИЛС БЯЛ ЕТИКЕТ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БУШМИЛС ЧЕРЕН ЕТИКЕТ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">4.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ОКЕНТОШЕН-АМЕРИКАН ОУК</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">6.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ГЛЕНФИДИХ 12Г</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">5.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МЕЙКЪРС МАРК</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">5.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">CHIVAS 12Y</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">6.70 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Уиски" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖЕНТЪЛМЕН ДЖАК</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">6.20 €</div>
+    </div>
+
+    <div class="sub-title">Джин</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БИЙФИТЪР</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.00 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БОМБАЙ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БИЙФИТЪР ПИНК</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ХЕНДРИКС</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">4.90 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖИН ТОНИК / БИЙФИТЪР</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">4.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖИН ТОНИК / БОМБАЙ</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">5.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Джин" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖИН ТОНИК / ХЕНДРИКС</div><div class="item-volume">250мл</div></div>
+      <div class="item-price">6.60 €</div>
+    </div>
+
+    <div class="sub-title">Ром</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Ром" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БАКАРДИ БЯЛ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Ром" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БАКАРДИ ТЪМЕН</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Ром" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БАКАРДИ СПАЙС</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+
+    <div class="sub-title">Аперитиви</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Аперитив" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">АПЕРОЛ ШПРИЦ</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Аперитив" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КАМПАРИ ТОНИК</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Аперитив" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ДЖИН ТОНИК</div><div class="item-volume">200мл</div></div>
+      <div class="item-price">5.60 €</div>
+    </div>
+
+    <div class="sub-title">Други</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">БЕЙЛИС</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.30 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МЕТАКСА 5*</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">УЗО ПЛОМАРИ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">2.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КАМПАРИ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КУРВОАЗИЕ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">4.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">МАРТИНИ</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=200&q=80" alt="Алкохол" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЛИСКА</div><div class="item-volume">50мл</div></div>
+      <div class="item-price">3.50 €</div>
+    </div>
+  </div>
+
+  <!-- ХАПВАНЕ -->
+  <div class="menu-section" id="hapvane">
+    <h2 class="section-title">Хапване</h2>
+
+    <div class="sub-title">Ядки</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЕЧЕН ФЪСТЪК</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ШАМФЪСТЪК</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.80 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ПЕЧЕН БАДЕМ</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">КАШУ</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЯДКИ СУРОВ МИКС</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.53 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1567892737950-30c4db37cd89?w=200&q=80" alt="Ядки" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЦАРИГРАДСКИ ЛЕШНИК</div><div class="item-volume">100гр</div></div>
+      <div class="item-price">3.60 €</div>
+    </div>
+
+    <div class="sub-title">Сандвичи</div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">САНДВИЧ</div><div class="item-volume">200гр</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ГРИЗИНИ</div><div class="item-volume">125гр</div></div>
+      <div class="item-price">2.60 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">ЛУКАНКОВИ ПРЪЧИЦИ</div><div class="item-volume">250гр</div></div>
+      <div class="item-price">5.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">LAHMAJUN — МАЛЪК</div><div class="item-volume">2бр</div></div>
+      <div class="item-price">3.40 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">LAHMAJUN — СРЕДЕН</div><div class="item-volume">3бр</div></div>
+      <div class="item-price">5.10 €</div>
+    </div>
+    <div class="menu-item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=200&q=80" alt="Сандвич" onerror="this.style.display='none'"/>
+      <div class="item-info"><div class="item-name">LAHMAJUN — ГОЛЯМ</div><div class="item-volume">4бр</div></div>
+      <div class="item-price">6.70 €</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+</script>
+
+</body>
+</html>
