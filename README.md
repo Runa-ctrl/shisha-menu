@@ -24,6 +24,10 @@
       display: flex; align-items: center; justify-content: flex-end;
       padding: 8px 16px 0; position: sticky; top: 0; z-index: 100;
     }
+    .category-slider-wrap { background: #fff; border-bottom: 2px solid #f5edd8; position: sticky; top: 41px; z-index: 99; }
+    .category-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 16px; gap: 10px; scrollbar-width: none; }
+    .category-slider::-webkit-scrollbar { display: none; }
+    .cat-btn {
     .lang-switcher {
   display: flex;
   background: #f0e4c8;
@@ -50,11 +54,6 @@
   color: #fff;
   box-shadow: 0 2px 8px rgba(200,134,10,0.35);
 }
-
-    .category-slider-wrap { background: #fff; border-bottom: 2px solid #f5edd8; position: sticky; top: 41px; z-index: 99; }
-    .category-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 16px; gap: 10px; scrollbar-width: none; }
-    .category-slider::-webkit-scrollbar { display: none; }
-    .cat-btn {
       flex-shrink: 0; background: #fdf6e8; border: 1.5px solid #e8d5a0; border-radius: 25px;
       padding: 7px 16px; font-size: 0.8rem; cursor: pointer; color: #7a6030;
       white-space: nowrap; font-family: inherit; transition: all 0.2s;
@@ -547,5 +546,6 @@
 
 </body>
 </html>
+
 
 
