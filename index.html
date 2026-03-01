@@ -184,6 +184,31 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+    .top-bar {
+  background: #fff;
+  border-bottom: 2px solid #f5edd8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.lang-switcher { display: flex; gap: 4px; margin-bottom: 8px; }
+.lang-btn {
+  background: #fdf6e8;
+  border: 1.5px solid #e8d5a0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #7a6030;
+  letter-spacing: 1px;
+  font-family: inherit;
+}
+.lang-btn.active { background: #c8860a; color: #fff; border-color: #c8860a; }
   </style>
 </head>
 <body>
@@ -194,6 +219,11 @@
   <div class="hero-overlay">
     <h1>Shisha Point</h1>
     <p>B A R</p>
+  </div>
+  <div class="top-bar">
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('bg',this)">BG</button>
+    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
   </div>
 </div>
 
@@ -210,6 +240,12 @@
     <button class="cat-btn" onclick="showSection('shotove', this)">Шотове</button>
     <button class="cat-btn" onclick="showSection('alkohol', this)">Алкохол</button>
     <button class="cat-btn" onclick="showSection('hapvane', this)">Хапване</button>
+    
+  </div>
+  <div class="top-bar">
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('bg',this)">BG</button>
+    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
   </div>
 </div>
 
@@ -1225,18 +1261,17 @@
 </main>
 
 <script>
-  function showSection(id, btn) {
-    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+  function setLang(lang, btn) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
 </script>
 
 </body>
 
 </html>
+
 
 
 
