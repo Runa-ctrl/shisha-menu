@@ -7,18 +7,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Georgia', serif; background: #fff; color: #1e1a14; }
-
-    .hero { position: relative; width: 100%; height: 100px; overflow: hidden; }
-    .hero img.hero-bg { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6));
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: flex-end; padding-bottom: 24px;
-    }
-    .hero-overlay h1 { font-size: 1.6rem; letter-spacing: 4px; text-transform: uppercase; color: #fff; font-weight: 400; }
-    .hero-overlay p { font-size: 0.65rem; color: rgba(255,255,255,0.8); letter-spacing: 3px; margin-top: 3px; }
-
     .top-bar {
       background: #fff;
       border-bottom: 2px solid #f5edd8;
@@ -104,23 +92,6 @@
   </style>
 </head>
 <body class="lang-bg">
-
-<div class="hero">
-  <img class="hero-bg" src="bar-photo.jpg" alt="Shisha Point Bar" onerror="this.parentElement.style.background='linear-gradient(135deg,#c8860a,#5c3a1e)'"/>
-  <div class="hero-overlay">
-    <h1>Shisha Point</h1>
-    <p>B A R</p>
-  </div>
-</div>
-
-<div class="top-bar">
-  <div class="menu-label"><span class="bg">МЕНЮ</span><span class="en">MENU</span></div>
-  <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('bg',this)">BG</button>
-    <button class="lang-btn" onclick="setLang('en',this)">EN</button>
-  </div>
-</div>
-
 <div class="category-slider-wrap">
   <div class="category-slider">
     <button class="cat-btn active" onclick="showSection('nargile',this)"><span class="bg">Наргиле</span><span class="en">Shisha</span></button>
@@ -566,6 +537,7 @@
 
 </body>
 </html>
+
 
 
 
