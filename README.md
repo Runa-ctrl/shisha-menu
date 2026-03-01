@@ -24,13 +24,32 @@
       display: flex; align-items: center; justify-content: flex-end;
       padding: 8px 16px 0; position: sticky; top: 0; z-index: 100;
     }
-    .lang-switcher { display: flex; gap: 4px; margin-bottom: 8px; }
-    .lang-btn {
-      background: #fdf6e8; border: 1.5px solid #e8d5a0; border-radius: 20px;
-      padding: 4px 12px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
-      color: #7a6030; letter-spacing: 1px; transition: all 0.2s; font-family: inherit;
-    }
-    .lang-btn.active { background: #c8860a; color: #fff; border-color: #c8860a; }
+    .lang-switcher {
+  display: flex;
+  background: #f0e4c8;
+  border-radius: 30px;
+  padding: 3px;
+  margin-bottom: 8px;
+  gap: 0;
+}
+.lang-btn {
+  background: transparent;
+  border: none;
+  border-radius: 26px;
+  padding: 5px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #a08040;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+.lang-btn.active {
+  background: #c8860a;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(200,134,10,0.35);
+}
 
     .category-slider-wrap { background: #fff; border-bottom: 2px solid #f5edd8; position: sticky; top: 41px; z-index: 99; }
     .category-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 10px 16px; gap: 10px; scrollbar-width: none; }
@@ -528,4 +547,5 @@
 
 </body>
 </html>
+
 
