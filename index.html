@@ -133,6 +133,8 @@
     .cat-btn { position: relative; }
     .new-badge { position: absolute; top: -7px; right: -6px; background: #e24b4a; color: #fff; font-size: 0.55rem; font-weight: 700; letter-spacing: 1px; padding: 1px 5px; border-radius: 8px; line-height: 1.3; }
     .fw-dot { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 200; }
+    .cat-btn.new-btn { background: #fff3e0; border-color: #f57c00; color: #e65100; font-weight: 700; letter-spacing: 1px; }
+    .cat-btn.new-btn.active, .cat-btn.new-btn:hover { background: #f57c00; border-color: #f57c00; color: #fff; }
   </style>
 </head>
 <body class="lang-bg">
@@ -146,7 +148,7 @@
 </div>
 <div class="category-slider-wrap">
   <div class="category-slider">
-    <button class="cat-btn active" id="novo-btn" onclick="showSection('novo',this)"><span class="bg">Ново</span><span class="en">New</span></button>    
+    <button class="cat-btn new-btn active" id="novo-btn" onclick="showSection('novo',this)">NEW</button>
     <button class="cat-btn" onclick="showSection('hapvane',this)"><span class="bg">Хапване</span><span class="en">Food</span></button>
     <button class="cat-btn " onclick="showSection('nargile',this)"><span class="bg">Наргиле</span><span class="en">Shisha</span></button>
     <button class="cat-btn" onclick="showSection('chai',this)"><span class="bg">Чай</span><span class="en">Tea</span></button>
@@ -158,7 +160,7 @@
     <button class="cat-btn" onclick="showSection('vino',this)"><span class="bg">Вино</span><span class="en">Wine</span></button>
     <button class="cat-btn" onclick="showSection('shotove',this)"><span class="bg">Шотове</span><span class="en">Shots</span></button>
     <button class="cat-btn" onclick="showSection('alkohol',this)"><span class="bg">Алкохол</span><span class="en">Spirits</span></button>
-    <button class="cat-btn" onclick="showSection('hapvane',this)"><span class="bg">Хапване</span><span class="en">Food</span></button>
+    <button class="cat-btn" onclick="showSection('hapvane',this)"><span class="bg">Хапване</span><span class="en">Food</span><span class="new-badge">NEW</span></button>
   </div>
 </div>
 
@@ -176,7 +178,6 @@
 <main>
 
 <div class="menu-section active" id="novo">
-  <h2 class="section-title"><span class="bg">Нови предложения — Болове</span><span class="en">New — Bowls</span></h2>
   <div class="menu-card"><img src="bowl-shiitake.jpg" onerror="this.style.display='none'"/>
     <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">УМАМИ ШИЙТАКЕ</span><span class="en">UMAMI SHIITAKE</span></div><div class="card-price">11.50 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
   <div class="menu-card"><img src="bowl-tofu.jpg" onerror="this.style.display='none'"/>
