@@ -138,6 +138,8 @@
     .hapvane-sub { display: none; }
     .hapvane-sub.active { display: block; }
     .sub-btn { position: relative; }
+    .menu-card { position: relative; }
+    .star-new { position: absolute; top: 8px; right: 8px; width: 62px; height: 62px; background: #e24b4a; color: #fff; font: 900 13px/62px Arial, sans-serif; letter-spacing: 1px; text-align: center; transform: rotate(-10deg); z-index: 2; pointer-events: none; clip-path: polygon(50% 0,61% 16%,79% 10%,78% 29%,96% 35%,84% 50%,96% 65%,78% 71%,79% 90%,61% 84%,50% 100%,39% 84%,21% 90%,22% 71%,4% 65%,16% 50%,4% 35%,22% 29%,21% 10%,39% 16%); }
   </style>
 </head>
 <body class="lang-bg">
@@ -658,6 +660,12 @@
     btn.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+    document.querySelectorAll('#novo .menu-card').forEach(function (card) {
+    var star = document.createElement('span');
+    star.className = 'star-new';
+    star.textContent = 'NEW';
+    card.appendChild(star);
+  });
 </script>
 
 </body>
