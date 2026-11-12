@@ -130,6 +130,9 @@
     span.en, span.bg { display: inline; }
     .lang-bg span.en { display: none; }
     .lang-en span.bg { display: none; }
+    .cat-btn { position: relative; }
+    .new-badge { position: absolute; top: -7px; right: -6px; background: #e24b4a; color: #fff; font-size: 0.55rem; font-weight: 700; letter-spacing: 1px; padding: 1px 5px; border-radius: 8px; line-height: 1.3; }
+    .fw-dot { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 200; }
   </style>
 </head>
 <body class="lang-bg">
@@ -143,7 +146,8 @@
 </div>
 <div class="category-slider-wrap">
   <div class="category-slider">
-    <button class="cat-btn active" onclick="showSection('novo',this)"><span class="bg">Ново</span><span class="en">New</span></button>
+    <button class="cat-btn active" id="novo-btn" onclick="showSection('novo',this)"><span class="bg">Ново</span><span class="en">New</span></button>    
+    <button class="cat-btn" onclick="showSection('bolove',this)"><span class="bg">Болове</span><span class="en">Bowls</span><span class="new-badge"><span class="bg">НОВО</span><span class="en">NEW</span></span></button>
     <button class="cat-btn " onclick="showSection('nargile',this)"><span class="bg">Наргиле</span><span class="en">Shisha</span></button>
     <button class="cat-btn" onclick="showSection('chai',this)"><span class="bg">Чай</span><span class="en">Tea</span></button>
     <button class="cat-btn" onclick="showSection('kafe',this)"><span class="bg">Кафе</span><span class="en">Coffee</span></button>
@@ -545,7 +549,22 @@
   <div class="menu-card"><img src="lah4.jpg" onerror="this.style.display='none'"/>
     <div class="menu-card-body"><div class="card-top"><div class="card-name">ЛАХМАДЖУН — <span class="bg">ГОЛЯМ</span><span class="en">LARGE</span></div><div class="card-price">7.20 €</div></div><div class="card-volume">4 <span class="bg">бр</span><span class="en">pcs</span></div><div class="card-desc"><span class="bg">За масата — четири парчета, всички доволни</span><span class="en">For the table — four pieces, everyone happy</span></div></div></div>
 </div>
-
+  
+<div class="menu-section" id="bolove">
+  <h2 class="section-title"><span class="bg">Болове</span><span class="en">Bowls</span></h2>
+  <div class="menu-card"><img src="bowl-shiitake.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">УМАМИ ШИЙТАКЕ</span><span class="en">UMAMI SHIITAKE</span></div><div class="card-price">11.50 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+  <div class="menu-card"><img src="bowl-tofu.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">ТОФУ СЛАДКО ЧИЛИ</span><span class="en">SWEET CHILI TOFU</span></div><div class="card-price">11.50 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+  <div class="menu-card"><img src="bowl-miso-chicken.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">ПИЛЕ МИСО</span><span class="en">MISO CHICKEN</span></div><div class="card-price">12.00 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+  <div class="menu-card"><img src="bowl-teriyaki-chicken.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">ПИЛЕ ТЕРИЯКИ „ТОКИО“</span><span class="en">TOKYO CHICKEN TERIYAKI</span></div><div class="card-price">12.00 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+  <div class="menu-card"><img src="bowl-truffle-beef.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">ТЕЛЕШКО С ТРЮФЕЛ</span><span class="en">TRUFFLE BEEF</span></div><div class="card-price">13.00 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+  <div class="menu-card"><img src="bowl-wasabi-beef.jpg" onerror="this.style.display='none'"/>
+    <div class="menu-card-body"><div class="card-top"><div class="card-name"><span class="bg">ТЕЛЕШКО С УАСАБИ</span><span class="en">WASABI BEEF</span></div><div class="card-price">13.00 €</div></div><div class="card-volume"><span class="bg">Бол с ориз</span><span class="en">Rice bowl</span></div></div></div>
+</div>
 </main>
 
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
@@ -589,6 +608,28 @@
   document.querySelectorAll('.menu-card img').forEach(img => {
     img.addEventListener('click', function() { openLightbox(this); });
   });
+    (function () {
+    var btn = document.getElementById('novo-btn');
+    if (!btn) return;
+    var colors = ['#e24b4a', '#f09595', '#a32d2d', '#ef9f27'];
+    var bursts = 0;
+    var timer = setInterval(function () {
+      var r = btn.getBoundingClientRect();
+      var cx = r.left + r.width / 2 + (Math.random() * 40 - 20);
+      var cy = r.top + r.height / 2 + (Math.random() * 16 - 8);
+      for (var i = 0; i < 16; i++) {
+        var d = document.createElement('span');
+        d.className = 'fw-dot';
+        d.style.background = colors[i % colors.length];
+        d.style.left = cx + 'px';
+        d.style.top = cy + 'px';
+        document.body.appendChild(d);
+        var a = Math.PI * 2 * i / 16, dist = 30 + Math.random() * 25;
+        d.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: 'translate(' + Math.cos(a) * dist + 'px,' + Math.sin(a) * dist + 'px)', opacity: 0 }], { duration: 900, easing: 'ease-out' }).onfinish = (function (el) { return function () { el.remove(); }; })(d);
+      }
+      if (++bursts >= 4) clearInterval(timer);
+    }, 600);
+  })();
 </script>
 
 </body>
